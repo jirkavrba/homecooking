@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: homecooking-server
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/homecooking}
+    username: ${DATABASE_USERNAME:homecooking}
+    password: ${DATABASE_PASSWORD:homecooking}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/homecooking}
+    user: ${DATABASE_USER:homecooking}
+    password: ${DATABASE_PASSWORD:homecooking}
+    driver-class-name: org.postgresql.Driver
