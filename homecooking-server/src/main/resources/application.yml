@@ -13,3 +13,10 @@ spring:
     user: ${DATABASE_USER:homecooking}
     password: ${DATABASE_PASSWORD:homecooking}
     driver-class-name: org.postgresql.Driver
+
+  web:
+    resources:
+      add-mappings: false
+
+server:
+  port: ${PORT:8080}
