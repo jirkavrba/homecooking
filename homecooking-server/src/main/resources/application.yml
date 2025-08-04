@@ -20,7 +20,7 @@ spring:
 
 homecooking:
   magic-links:
-    base-url: https://homecooking.vrba.dev/login/link/
+    base-url: https://homecooking.vrba.dev/login/magic-link/
     expiration-hours: 8
 
 server:

@@ -1,6 +1,7 @@
 package dev.vrba.homecooking.server.service
 
 import dev.vrba.homecooking.server.configuration.MagicLinkConfiguration
+import dev.vrba.homecooking.server.exception.ExpiredLoginLinkException
 import dev.vrba.homecooking.server.model.MagicLink
 import dev.vrba.homecooking.server.model.User
 import dev.vrba.homecooking.server.repository.MagicLinkRepository
@@ -33,5 +34,18 @@ class MagicLinkService(
         repository.save(magicLink)
 
         return configuration.baseUrl + token;
+    }
+
+    fun useMagicLink(token: String): MagicLink? {
+        val link = repository.findByToken(token) ?: return null
+        val expired = link.expiration.isBefore(OffsetDateTime.now(clock))
+
+        if (expired) {
+            throw ExpiredLoginLinkException()
+        }
+
+        repository.delete(link)
+
+        return link
     }
 }

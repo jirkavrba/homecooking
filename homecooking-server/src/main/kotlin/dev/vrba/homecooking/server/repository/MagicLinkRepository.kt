@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MagicLinkRepository : CrudRepository<MagicLink, Int> {
+
+    fun findByToken(token: String): MagicLink?
+
 }
