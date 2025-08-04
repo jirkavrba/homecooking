@@ -1,7 +1,7 @@
 package dev.vrba.homecooking.server.service
 
 import dev.vrba.homecooking.server.configuration.MagicLinkConfiguration
-import dev.vrba.homecooking.server.exception.ExpiredLoginLinkException
+import dev.vrba.homecooking.server.exception.MagicLinkExpiredException
 import dev.vrba.homecooking.server.model.MagicLink
 import dev.vrba.homecooking.server.model.User
 import dev.vrba.homecooking.server.repository.MagicLinkRepository
@@ -41,7 +41,7 @@ class MagicLinkService(
         val expired = link.expiration.isBefore(OffsetDateTime.now(clock))
 
         if (expired) {
-            throw ExpiredLoginLinkException()
+            throw MagicLinkExpiredException()
         }
 
         repository.delete(link)

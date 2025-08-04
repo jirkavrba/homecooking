@@ -35,6 +35,7 @@ class SecurityConfiguration {
             .authorizeHttpRequests {
                 it.requestMatchers("/api/v1/bot/**").hasAuthority(BOT_ROLE)
                 it.requestMatchers("/api/v1/user/**").hasAuthority(USER_ROLE)
+                it.requestMatchers("/api/v1/auth/**").permitAll()
                 it.anyRequest().permitAll()
             }
             .build()
