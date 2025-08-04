@@ -11,6 +11,9 @@ class UserService(
     private val repository: UserRepository,
     private val magicLinkService: MagicLinkService,
 ) {
+    fun findByToken(token: String): User? {
+        return repository.findByToken(token)
+    }
 
     fun upsertUser(discordId: String, username: String, avatar: String): User {
         return repository.findByDiscordId(discordId)
