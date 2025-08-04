@@ -1,0 +1,11 @@
+services:
+  database:
+    image: postgres
+    restart: unless-stopped
+    container_name: homecooking-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: homecooking
+      POSTGRES_USER: homecooking
+      POSTGRES_PASSWORD: homecooking
