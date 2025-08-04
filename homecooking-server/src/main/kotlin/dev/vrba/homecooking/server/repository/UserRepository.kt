@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : ListCrudRepository<User, Int> {
 
+    fun findByDiscordId(discordId: String): User?
 
 }

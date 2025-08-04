@@ -18,5 +18,10 @@ spring:
     resources:
       add-mappings: false
 
+homecooking:
+  magic-links:
+    base-url: https://homecooking.vrba.dev/login/link/
+    expiration-hours: 8
+
 server:
   port: ${PORT:8080}
