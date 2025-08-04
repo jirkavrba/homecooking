@@ -19,6 +19,11 @@ spring:
       add-mappings: false
 
 homecooking:
+  auth:
+    bot:
+      username: ${BOT_USERNAME:bot}
+      password: ${BOT_PASSWORD:secret}
+
   magic-links:
     base-url: https://homecooking.vrba.dev/login/magic-link/
     expiration-hours: 8
