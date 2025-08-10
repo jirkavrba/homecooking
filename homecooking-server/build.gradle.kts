@@ -22,6 +22,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven(url = "https://jitpack.io")
 }
 
 dependencies {
@@ -34,6 +35,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
 	implementation("org.apache.commons:commons-lang3:3.18.0")
+	implementation("com.github.imagekit-developer:imagekit-java:2.0.0")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

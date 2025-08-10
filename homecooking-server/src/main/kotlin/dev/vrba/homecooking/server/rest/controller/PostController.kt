@@ -1,22 +1,29 @@
 package dev.vrba.homecooking.server.rest.controller
 
 import dev.vrba.homecooking.server.model.User
+import dev.vrba.homecooking.server.rest.response.FileUploadResponse
 import dev.vrba.homecooking.server.rest.response.PostsFeedResponse
 import dev.vrba.homecooking.server.rest.response.dto.toDto
+import dev.vrba.homecooking.server.security.FileUploadService
 import dev.vrba.homecooking.server.service.MealPostService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
 @SecurityRequirement(name = "user")
 @RequestMapping("/api/v1/user/post")
 class PostController(
-    private val service: MealPostService
+    private val mealPostService: MealPostService,
+    private val fileUploadService: FileUploadService
 ) {
 
     @GetMapping("/feed")
@@ -27,8 +34,23 @@ class PostController(
     @GetMapping("/my-posts")
 
     fun list(@AuthenticationPrincipal user: User): ResponseEntity<PostsFeedResponse> {
-        val posts = service.getAllPostsByUser(user)
+        val posts = mealPostService.getAllPostsByUser(user)
         val response = PostsFeedResponse(posts = posts.map { it.toDto() })
+
+        return ResponseEntity.ok(response)
+    }
+
+    @PostMapping(
+        "/image/upload",
+        consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun uploadImage(
+        @AuthenticationPrincipal user: User,
+        @RequestParam("file") file: MultipartFile
+    ): ResponseEntity<FileUploadResponse> {
+        val uploadedFile = fileUploadService.uploadFile(user, file)
+        val response = FileUploadResponse(url = uploadedFile.fileUrl)
 
         return ResponseEntity.ok(response)
     }

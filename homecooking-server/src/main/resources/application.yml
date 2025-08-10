@@ -18,6 +18,11 @@ spring:
     resources:
       add-mappings: false
 
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
 homecooking:
   auth:
     bot:
@@ -27,6 +32,14 @@ homecooking:
   magic-links:
     base-url: https://homecooking.vrba.dev/login/magic-link/
     expiration-hours: 8
+
+
+  integration:
+    image-kit:
+      private-key: ${IMAGE_KIT_PRIVATE_KEY}
+      public-key: ${IMAGE_KIT_PUBLIC_KEY}
+      url-endpoint: ${IMAGE_KIT_URL_ENDPOINT:https://ik.imagekit.io/homecooking}
+
 
 server:
   port: ${PORT:8080}
