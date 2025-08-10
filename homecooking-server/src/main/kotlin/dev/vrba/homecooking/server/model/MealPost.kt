@@ -33,6 +33,15 @@ data class MealPost(
     @Column("rating")
     val rating: Int? = null,
 
+    @Column("price_czk_per_portion")
+    val priceCzkPerPortion: Int? = null,
+
+    @Column("kcal_per_portion")
+    val kcalPerPortion: Int? = null,
+
+    @Column("preparation_time_mins")
+    val preparationTimeMins: Int? = null,
+
     @Column("posted_at")
     val postedAt: OffsetDateTime = OffsetDateTime.now(),
 )

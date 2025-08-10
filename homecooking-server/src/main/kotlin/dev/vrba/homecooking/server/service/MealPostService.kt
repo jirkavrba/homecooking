@@ -30,4 +30,11 @@ class MealPostService(
 
         return repository.save(entity)
     }
+
+    fun getAllPostsByUser(user: User): List<MealPost> {
+        val reference = AggregateReference.to<User, Int>(user.id)
+        val posts = repository.findAllByUser(reference)
+
+        return posts
+    }
 }
