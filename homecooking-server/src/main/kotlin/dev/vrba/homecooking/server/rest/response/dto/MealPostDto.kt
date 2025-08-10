@@ -23,6 +23,8 @@ data class MealPostDto(
     val kcalPerPortion: Int? = null,
     @JsonProperty("preparation_time_minutes")
     val preparationTimeMins: Int? = null,
+    @JsonProperty("share_token")
+    val shareToken: String? = null,
     @JsonProperty("posted_at")
     val postedAt: OffsetDateTime,
 )
@@ -38,5 +40,6 @@ fun MealPost.toDto() =
         priceCzkPerPortion = priceCzkPerPortion,
         kcalPerPortion = kcalPerPortion,
         preparationTimeMins = preparationTimeMins,
+        shareToken = shareToken,
         postedAt = postedAt
     )

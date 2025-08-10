@@ -42,6 +42,9 @@ data class MealPost(
     @Column("preparation_time_mins")
     val preparationTimeMins: Int? = null,
 
+    @Column("share_token")
+    val shareToken: String? = null,
+
     @Column("posted_at")
     val postedAt: OffsetDateTime = OffsetDateTime.now(),
 )

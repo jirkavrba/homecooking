@@ -2,8 +2,8 @@ package dev.vrba.homecooking.server.service
 
 import dev.vrba.homecooking.server.model.MealPost
 import dev.vrba.homecooking.server.model.User
-import dev.vrba.homecooking.server.model.domain.MealPostData
 import dev.vrba.homecooking.server.repository.MealPostRepository
+import dev.vrba.homecooking.server.rest.request.CreatePostRequest
 import org.springframework.data.jdbc.core.mapping.AggregateReference
 import org.springframework.stereotype.Service
 import java.time.Clock
@@ -14,17 +14,22 @@ class MealPostService(
     private val clock: Clock,
     private val repository: MealPostRepository
 ) {
-    fun createMealPost(user: User, data: MealPostData): MealPost {
+    fun createMealPost(user: User, request: CreatePostRequest): MealPost {
+        val shareToken = createShareToken()
         val userReference = AggregateReference.to<User, Int>(user.id)
         val entity = MealPost(
             id = 0,
             user = userReference,
-            title = data.title,
-            description = data.description,
-            imageUrl = data.imageUrl,
-            ingredientsList = data.ingredientsList,
-            recipe = data.recipe,
-            rating = data.rating,
+            title = request.title,
+            description = request.description,
+            imageUrl = request.imageUrl,
+            ingredientsList = request.ingredientsList,
+            recipe = request.recipe,
+            rating = request.rating,
+            priceCzkPerPortion = request.priceCzkPerPortion,
+            kcalPerPortion = request.kcalPerPortion,
+            preparationTimeMins = request.preparationTimeMins,
+            shareToken = shareToken,
             postedAt = OffsetDateTime.now(clock)
         )
 
@@ -37,4 +42,7 @@ class MealPostService(
 
         return posts
     }
+
+    private fun createShareToken(): String =
+        List(16) { ('a'..'z').random() }.joinToString("")
 }

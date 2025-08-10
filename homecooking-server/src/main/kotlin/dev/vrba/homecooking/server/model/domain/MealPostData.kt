@@ -7,4 +7,7 @@ data class MealPostData(
     val ingredientsList: String? = null,
     val recipe: String? = null,
     val rating: Int? = null,
+    val priceCzkPerPortion: Int? = null,
+    val kcalPerPortion: Int? = null,
+    val preparationTimeMins: Int? = null
 )

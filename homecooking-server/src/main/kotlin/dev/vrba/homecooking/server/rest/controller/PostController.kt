@@ -1,6 +1,9 @@
 package dev.vrba.homecooking.server.rest.controller
 
 import dev.vrba.homecooking.server.model.User
+import dev.vrba.homecooking.server.model.domain.MealPostData
+import dev.vrba.homecooking.server.rest.request.CreatePostRequest
+import dev.vrba.homecooking.server.rest.request.CreatePostResponse
 import dev.vrba.homecooking.server.rest.response.FileUploadResponse
 import dev.vrba.homecooking.server.rest.response.PostsFeedResponse
 import dev.vrba.homecooking.server.rest.response.dto.toDto
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -33,9 +37,20 @@ class PostController(
 
     @GetMapping("/my-posts")
 
-    fun list(@AuthenticationPrincipal user: User): ResponseEntity<PostsFeedResponse> {
+    fun listPosts(@AuthenticationPrincipal user: User): ResponseEntity<PostsFeedResponse> {
         val posts = mealPostService.getAllPostsByUser(user)
         val response = PostsFeedResponse(posts = posts.map { it.toDto() })
+
+        return ResponseEntity.ok(response)
+    }
+
+    @PostMapping("/create")
+    fun createPost(
+        @AuthenticationPrincipal user: User,
+        @RequestBody request: CreatePostRequest
+    ): ResponseEntity<CreatePostResponse> {
+        val post = mealPostService.createMealPost(user, request)
+        val response = CreatePostResponse(post = post.toDto())
 
         return ResponseEntity.ok(response)
     }
