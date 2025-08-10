@@ -1,11 +1,11 @@
 package dev.vrba.homecooking.server.rest.controller
 
 import dev.vrba.homecooking.server.model.User
-import dev.vrba.homecooking.server.model.domain.MealPostData
 import dev.vrba.homecooking.server.rest.request.CreatePostRequest
 import dev.vrba.homecooking.server.rest.request.CreatePostResponse
 import dev.vrba.homecooking.server.rest.response.FileUploadResponse
 import dev.vrba.homecooking.server.rest.response.PostsFeedResponse
+import dev.vrba.homecooking.server.rest.response.PostsListingResponse
 import dev.vrba.homecooking.server.rest.response.dto.toDto
 import dev.vrba.homecooking.server.security.FileUploadService
 import dev.vrba.homecooking.server.service.MealPostService
@@ -31,15 +31,23 @@ class PostController(
 ) {
 
     @GetMapping("/feed")
-    fun feed(): ResponseEntity<PostsFeedResponse> {
-        return TODO("Feed requires following to be implemented among users.")
+    fun feed(
+        @AuthenticationPrincipal user: User,
+        @RequestParam("page") page: Int = 1
+    ): ResponseEntity<PostsFeedResponse> {
+        println(page)
+
+        val posts = mealPostService.getUserFeedPosts(user)
+        val response = PostsFeedResponse(posts = posts.map { it.toDto() })
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/my-posts")
 
-    fun listPosts(@AuthenticationPrincipal user: User): ResponseEntity<PostsFeedResponse> {
+    fun listPosts(@AuthenticationPrincipal user: User): ResponseEntity<PostsListingResponse> {
         val posts = mealPostService.getAllPostsByUser(user)
-        val response = PostsFeedResponse(posts = posts.map { it.toDto() })
+        val response = PostsListingResponse(posts = posts.map { it.toDto() })
 
         return ResponseEntity.ok(response)
     }

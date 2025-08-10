@@ -2,6 +2,7 @@ package dev.vrba.homecooking.server.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.MappedCollection
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("users")
@@ -16,5 +17,9 @@ data class User(
     @Column("discord_id")
     val discordId: String,
     @Column("token")
-    val token: String? = null
+    val token: String? = null,
+    @Column("follow_code")
+    val followCode: String,
+    @MappedCollection(idColumn = "user_id")
+    val followedUsers: Set<FollowedUser> = emptySet()
 )

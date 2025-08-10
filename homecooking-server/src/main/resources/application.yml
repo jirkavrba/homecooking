@@ -40,6 +40,9 @@ homecooking:
       public-key: ${IMAGE_KIT_PUBLIC_KEY}
       url-endpoint: ${IMAGE_KIT_URL_ENDPOINT:https://ik.imagekit.io/homecooking}
 
+logging:
+  level:
+    sql: trace
 
 server:
   port: ${PORT:8080}

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import dev.vrba.homecooking.server.rest.response.dto.MealPostDto
 import dev.vrba.homecooking.server.rest.response.dto.MealPostWithAuthorDto
 
-data class PostsFeedResponse(
+data class PostsListingResponse(
     @JsonProperty("posts")
-    val posts: List<MealPostWithAuthorDto>
+    val posts: List<MealPostDto>
 )
