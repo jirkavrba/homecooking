@@ -3,6 +3,7 @@ name: build-server-image
 on:
   push:
     paths:
+      - '.github/workflows/build-server-image.yml'
       - 'homecooking-server/**'
     branches:
       - 'main'
@@ -30,6 +31,4 @@ jobs:
 
       - name: 'Build and push the docker image'
         working-directory: homecooking-server
-        run: ./gradlew bootBuildImage \
-          --imageName=ghcr.io/jirkavrba/homecooking/server:latest \
-          --publishImage
+        run: ./gradlew bootBuildImage --imageName=ghcr.io/jirkavrba/homecooking/server --publishImage
