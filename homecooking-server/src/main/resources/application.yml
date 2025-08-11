@@ -10,7 +10,7 @@ spring:
 
   flyway:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/homecooking}
-    user: ${DATABASE_USER:homecooking}
+    user: ${DATABASE_USERNAME:homecooking}
     password: ${DATABASE_PASSWORD:homecooking}
     driver-class-name: org.postgresql.Driver
 
