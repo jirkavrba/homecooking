@@ -1,0 +1,34 @@
+name: build-server-image
+
+on:
+  push:
+    paths:
+      - 'homecooking-server/**'
+    branches:
+      - 'main'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+
+      - name: 'Set up JDK 21'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: 'Log in to container registry'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Build and push the docker image'
+        run: ./gradlew bootBuildImage \
+          --imageName=ghcr.io/jirkavrba/homecooking/server:latest \
+          --publishImage

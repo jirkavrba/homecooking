@@ -33,7 +33,6 @@ homecooking:
     base-url: https://homecooking.vrba.dev/login/magic-link/
     expiration-hours: 8
 
-
   integration:
     image-kit:
       private-key: ${IMAGE_KIT_PRIVATE_KEY}
