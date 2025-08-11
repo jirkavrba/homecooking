@@ -5,538 +5,496 @@
  * OpenAPI spec version: dev
  */
 import {
-    useMutation,
-    useQuery
+  useMutation,
+  useQuery
 } from '@tanstack/react-query';
 import type {
-    DataTag,
-    DefinedInitialDataOptions,
-    DefinedUseQueryResult,
-    MutationFunction,
-    QueryClient,
-    QueryFunction,
-    QueryKey,
-    UndefinedInitialDataOptions,
-    UseMutationOptions,
-    UseMutationResult,
-    UseQueryOptions,
-    UseQueryResult
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult
 } from '@tanstack/react-query';
 
 import * as axios from 'axios';
 import type {
-    AxiosError,
-    AxiosRequestConfig,
-    AxiosResponse
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse
 } from 'axios';
 
 export interface UserInfoResponse {
-    username: string;
-    avatar_url: string;
-    follow_code: string;
+  username: string;
+  avatar_url: string;
+  follow_code: string;
 }
 
 export interface FileUploadResponse {
-    file_url: string;
+  file_url: string;
 }
 
 export interface CreatePostRequest {
-    title: string;
-    image_url: string;
-    description?: string;
-    ingredients_list?: string;
-    recipe?: string;
-    /**
-     * @minimum 1
-     * @maximum 5
-     */
-    rating?: number;
-    /** @minimum 0 */
-    priceCzkPerPortion?: number;
-    /** @minimum 0 */
-    kcalPerPortion?: number;
-    /** @minimum 0 */
-    preparationTimeMins?: number;
+  title: string;
+  image_url: string;
+  description?: string;
+  ingredients_list?: string;
+  recipe?: string;
+  /**
+   * @minimum 1
+   * @maximum 5
+   */
+  rating?: number;
+  /** @minimum 0 */
+  priceCzkPerPortion?: number;
+  /** @minimum 0 */
+  kcalPerPortion?: number;
+  /** @minimum 0 */
+  preparationTimeMins?: number;
 }
 
 export interface CreatePostResponse {
-    post: MealPostDto;
+  post: MealPostDto;
 }
 
 export interface MealPostDto {
-    title: string;
-    image_url: string;
-    description?: string;
-    ingredients_list?: string;
-    recipe?: string;
-    rating?: number;
-    price_czk_per_portion?: number;
-    kcal_per_portion?: number;
-    preparation_time_minutes?: number;
-    share_token?: string;
-    posted_at: string;
+  title: string;
+  image_url: string;
+  description?: string;
+  ingredients_list?: string;
+  recipe?: string;
+  rating?: number;
+  price_czk_per_portion?: number;
+  kcal_per_portion?: number;
+  preparation_time_minutes?: number;
+  share_token?: string;
+  posted_at: string;
 }
 
 export interface FollowUserRequest {
-    /** @minLength 1 */
-    follow_code: string;
+  /** @minLength 1 */
+  follow_code: string;
 }
 
 export interface MagicLinkRequest {
-    discord_id: string;
-    username: string;
-    avatar: string;
+  discord_id: string;
+  username: string;
+  avatar: string;
 }
 
 export interface MagicLinkResponse {
-    magic_link: string;
+  magic_link: string;
 }
 
 export interface LoginRequest {
-    token: string;
+  token: string;
 }
 
 export interface LoginResponse {
-    auth_token: string;
+  auth_token: string;
 }
 
 export interface PostsListingResponse {
-    posts: MealPostDto[];
+  posts: MealPostDto[];
 }
 
 export interface MealPostWithAuthorDto {
-    post: MealPostDto;
-    author: PostAuthorDto;
+  post: MealPostDto;
+  author: PostAuthorDto;
 }
 
 export interface PostAuthorDto {
-    username: string;
-    avatar_url: string;
+  username: string;
+  avatar_url: string;
 }
 
 export interface PostsFeedResponse {
-    posts: MealPostWithAuthorDto[];
+  posts: MealPostWithAuthorDto[];
 }
 
 export type UploadImageBody = {
-    file: Blob;
+  file: Blob;
 };
 
 export type FeedParams = {
-    page?: number;
+page?: number;
 };
 
 export const regenerateFollowCode = (
-    options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserInfoResponse>> => {
-
-
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<UserInfoResponse>> => {
+    
+    
     return axios.default.post(
-        `/api/v1/user/regenerate-follow-code`, undefined, options
+      `https://server.homecooking.vrba.dev/api/v1/user/regenerate-follow-code`,undefined,options
     );
-}
+  }
+
 
 
 export const getRegenerateFollowCodeMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError, void, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError, void, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError,void, TContext> => {
 
-    const mutationKey = ['regenerateFollowCode'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['regenerateFollowCode'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
 
-
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof regenerateFollowCode>>, void> = () => {
+      
 
 
-        return regenerateFollowCode(axiosOptions)
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof regenerateFollowCode>>, void> = () => {
+          
+
+          return  regenerateFollowCode(axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RegenerateFollowCodeMutationResult = NonNullable<Awaited<ReturnType<typeof regenerateFollowCode>>>
+    
+    export type RegenerateFollowCodeMutationError = AxiosError<unknown>
+
+    export const useRegenerateFollowCode = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError,void, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof regenerateFollowCode>>,
+        TError,
+        void,
+        TContext
+      > => {
+
+      const mutationOptions = getRegenerateFollowCodeMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type RegenerateFollowCodeMutationResult = NonNullable<Awaited<ReturnType<typeof regenerateFollowCode>>>
-
-export type RegenerateFollowCodeMutationError = AxiosError<unknown>
-
-export const useRegenerateFollowCode = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof regenerateFollowCode>>, TError, void, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof regenerateFollowCode>>,
-    TError,
-    void,
-    TContext
-> => {
-
-    const mutationOptions = getRegenerateFollowCodeMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const uploadImage = (
     uploadImageBody: UploadImageBody, options?: AxiosRequestConfig
-): Promise<AxiosResponse<FileUploadResponse>> => {
-
+ ): Promise<AxiosResponse<FileUploadResponse>> => {
+    
     const formData = new FormData();
-    formData.append(`file`, uploadImageBody.file)
+formData.append(`file`, uploadImageBody.file)
 
     return axios.default.post(
-        `/api/v1/user/post/image/upload`,
-        formData, options
+      `https://server.homecooking.vrba.dev/api/v1/user/post/image/upload`,
+      formData,options
     );
-}
+  }
+
 
 
 export const getUploadImageMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError, { data: UploadImageBody }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError, { data: UploadImageBody }, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError,{data: UploadImageBody}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError,{data: UploadImageBody}, TContext> => {
 
-    const mutationKey = ['uploadImage'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['uploadImage'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
 
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadImage>>, {
-        data: UploadImageBody
-    }> = (props) => {
-        const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadImage>>, {data: UploadImageBody}> = (props) => {
+          const {data} = props ?? {};
 
-        return uploadImage(data, axiosOptions)
+          return  uploadImage(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UploadImageMutationResult = NonNullable<Awaited<ReturnType<typeof uploadImage>>>
+    export type UploadImageMutationBody = UploadImageBody
+    export type UploadImageMutationError = AxiosError<unknown>
+
+    export const useUploadImage = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError,{data: UploadImageBody}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof uploadImage>>,
+        TError,
+        {data: UploadImageBody},
+        TContext
+      > => {
+
+      const mutationOptions = getUploadImageMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type UploadImageMutationResult = NonNullable<Awaited<ReturnType<typeof uploadImage>>>
-export type UploadImageMutationBody = UploadImageBody
-export type UploadImageMutationError = AxiosError<unknown>
-
-export const useUploadImage = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof uploadImage>>, TError, { data: UploadImageBody }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof uploadImage>>,
-    TError,
-    { data: UploadImageBody },
-    TContext
-> => {
-
-    const mutationOptions = getUploadImageMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const createPost = (
     createPostRequest: CreatePostRequest, options?: AxiosRequestConfig
-): Promise<AxiosResponse<CreatePostResponse>> => {
-
-
+ ): Promise<AxiosResponse<CreatePostResponse>> => {
+    
+    
     return axios.default.post(
-        `/api/v1/user/post/create`,
-        createPostRequest, options
+      `https://server.homecooking.vrba.dev/api/v1/user/post/create`,
+      createPostRequest,options
     );
-}
+  }
+
 
 
 export const getCreatePostMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError, {
-                                data: CreatePostRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError, { data: CreatePostRequest }, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError,{data: CreatePostRequest}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError,{data: CreatePostRequest}, TContext> => {
 
-    const mutationKey = ['createPost'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['createPost'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
 
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPost>>, {
-        data: CreatePostRequest
-    }> = (props) => {
-        const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPost>>, {data: CreatePostRequest}> = (props) => {
+          const {data} = props ?? {};
 
-        return createPost(data, axiosOptions)
+          return  createPost(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreatePostMutationResult = NonNullable<Awaited<ReturnType<typeof createPost>>>
+    export type CreatePostMutationBody = CreatePostRequest
+    export type CreatePostMutationError = AxiosError<unknown>
+
+    export const useCreatePost = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError,{data: CreatePostRequest}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createPost>>,
+        TError,
+        {data: CreatePostRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getCreatePostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type CreatePostMutationResult = NonNullable<Awaited<ReturnType<typeof createPost>>>
-export type CreatePostMutationBody = CreatePostRequest
-export type CreatePostMutationError = AxiosError<unknown>
-
-export const useCreatePost = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof createPost>>, TError, {
-                                data: CreatePostRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof createPost>>,
-    TError,
-    { data: CreatePostRequest },
-    TContext
-> => {
-
-    const mutationOptions = getCreatePostMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const followUser = (
     followUserRequest: FollowUserRequest, options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserInfoResponse>> => {
-
-
+ ): Promise<AxiosResponse<UserInfoResponse>> => {
+    
+    
     return axios.default.post(
-        `/api/v1/user/follow`,
-        followUserRequest, options
+      `https://server.homecooking.vrba.dev/api/v1/user/follow`,
+      followUserRequest,options
     );
-}
+  }
+
 
 
 export const getFollowUserMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError, {
-                                data: FollowUserRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError, { data: FollowUserRequest }, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError,{data: FollowUserRequest}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError,{data: FollowUserRequest}, TContext> => {
 
-    const mutationKey = ['followUser'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['followUser'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
 
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof followUser>>, {
-        data: FollowUserRequest
-    }> = (props) => {
-        const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof followUser>>, {data: FollowUserRequest}> = (props) => {
+          const {data} = props ?? {};
 
-        return followUser(data, axiosOptions)
+          return  followUser(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type FollowUserMutationResult = NonNullable<Awaited<ReturnType<typeof followUser>>>
+    export type FollowUserMutationBody = FollowUserRequest
+    export type FollowUserMutationError = AxiosError<unknown>
+
+    export const useFollowUser = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError,{data: FollowUserRequest}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof followUser>>,
+        TError,
+        {data: FollowUserRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getFollowUserMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type FollowUserMutationResult = NonNullable<Awaited<ReturnType<typeof followUser>>>
-export type FollowUserMutationBody = FollowUserRequest
-export type FollowUserMutationError = AxiosError<unknown>
-
-export const useFollowUser = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof followUser>>, TError, {
-                                data: FollowUserRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof followUser>>,
-    TError,
-    { data: FollowUserRequest },
-    TContext
-> => {
-
-    const mutationOptions = getFollowUserMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const generateMagicLink = (
     magicLinkRequest: MagicLinkRequest, options?: AxiosRequestConfig
-): Promise<AxiosResponse<MagicLinkResponse>> => {
-
-
+ ): Promise<AxiosResponse<MagicLinkResponse>> => {
+    
+    
     return axios.default.post(
-        `/api/v1/bot/user/magic-link`,
-        magicLinkRequest, options
+      `https://server.homecooking.vrba.dev/api/v1/bot/user/magic-link`,
+      magicLinkRequest,options
     );
-}
+  }
+
 
 
 export const getGenerateMagicLinkMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError, {
-                                data: MagicLinkRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError, { data: MagicLinkRequest }, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError,{data: MagicLinkRequest}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError,{data: MagicLinkRequest}, TContext> => {
 
-    const mutationKey = ['generateMagicLink'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['generateMagicLink'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
 
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof generateMagicLink>>, {
-        data: MagicLinkRequest
-    }> = (props) => {
-        const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof generateMagicLink>>, {data: MagicLinkRequest}> = (props) => {
+          const {data} = props ?? {};
 
-        return generateMagicLink(data, axiosOptions)
+          return  generateMagicLink(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GenerateMagicLinkMutationResult = NonNullable<Awaited<ReturnType<typeof generateMagicLink>>>
+    export type GenerateMagicLinkMutationBody = MagicLinkRequest
+    export type GenerateMagicLinkMutationError = AxiosError<unknown>
+
+    export const useGenerateMagicLink = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError,{data: MagicLinkRequest}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof generateMagicLink>>,
+        TError,
+        {data: MagicLinkRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getGenerateMagicLinkMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type GenerateMagicLinkMutationResult = NonNullable<Awaited<ReturnType<typeof generateMagicLink>>>
-export type GenerateMagicLinkMutationBody = MagicLinkRequest
-export type GenerateMagicLinkMutationError = AxiosError<unknown>
-
-export const useGenerateMagicLink = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof generateMagicLink>>, TError, {
-                                data: MagicLinkRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof generateMagicLink>>,
-    TError,
-    { data: MagicLinkRequest },
-    TContext
-> => {
-
-    const mutationOptions = getGenerateMagicLinkMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const loginWithMagicLink = (
     loginRequest: LoginRequest, options?: AxiosRequestConfig
-): Promise<AxiosResponse<LoginResponse>> => {
-
-
+ ): Promise<AxiosResponse<LoginResponse>> => {
+    
+    
     return axios.default.post(
-        `/api/v1/auth/login/magic-link`,
-        loginRequest, options
+      `https://server.homecooking.vrba.dev/api/v1/auth/login/magic-link`,
+      loginRequest,options
     );
-}
+  }
+
 
 
 export const getLoginWithMagicLinkMutationOptions = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError, {
-                                data: LoginRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-): UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError, { data: LoginRequest }, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError,{data: LoginRequest}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError,{data: LoginRequest}, TContext> => {
 
-    const mutationKey = ['loginWithMagicLink'];
-    const {mutation: mutationOptions, axios: axiosOptions} = options ?
-        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-            options
-            : {...options, mutation: {...options.mutation, mutationKey}}
-        : {mutation: {mutationKey,}, axios: undefined};
+const mutationKey = ['loginWithMagicLink'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
 
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof loginWithMagicLink>>, {
-        data: LoginRequest
-    }> = (props) => {
-        const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof loginWithMagicLink>>, {data: LoginRequest}> = (props) => {
+          const {data} = props ?? {};
 
-        return loginWithMagicLink(data, axiosOptions)
+          return  loginWithMagicLink(data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LoginWithMagicLinkMutationResult = NonNullable<Awaited<ReturnType<typeof loginWithMagicLink>>>
+    export type LoginWithMagicLinkMutationBody = LoginRequest
+    export type LoginWithMagicLinkMutationError = AxiosError<unknown>
+
+    export const useLoginWithMagicLink = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError,{data: LoginRequest}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof loginWithMagicLink>>,
+        TError,
+        {data: LoginRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getLoginWithMagicLinkMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
     }
-
-
-    return {mutationFn, ...mutationOptions}
-}
-
-export type LoginWithMagicLinkMutationResult = NonNullable<Awaited<ReturnType<typeof loginWithMagicLink>>>
-export type LoginWithMagicLinkMutationBody = LoginRequest
-export type LoginWithMagicLinkMutationError = AxiosError<unknown>
-
-export const useLoginWithMagicLink = <TError = AxiosError<unknown>,
-    TContext = unknown>(options?: {
-                            mutation?: UseMutationOptions<Awaited<ReturnType<typeof loginWithMagicLink>>, TError, {
-                                data: LoginRequest
-                            }, TContext>,
-                            axios?: AxiosRequestConfig
-                        }
-    , queryClient?: QueryClient): UseMutationResult<
-    Awaited<ReturnType<typeof loginWithMagicLink>>,
-    TError,
-    { data: LoginRequest },
-    TContext
-> => {
-
-    const mutationOptions = getLoginWithMagicLinkMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-}
-
+    
 export const listPosts = (
-    options?: AxiosRequestConfig
-): Promise<AxiosResponse<PostsListingResponse>> => {
-
-
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<PostsListingResponse>> => {
+    
+    
     return axios.default.get(
-        `/api/v1/user/post/my-posts`, options
+      `https://server.homecooking.vrba.dev/api/v1/user/post/my-posts`,options
     );
-}
+  }
 
 
 export const getListPostsQueryKey = () => {
-    return [`/api/v1/user/post/my-posts`] as const;
-}
+    return [`https://server.homecooking.vrba.dev/api/v1/user/post/my-posts`] as const;
+    }
 
-
-export const getListPostsQueryOptions = <TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>(options?: {
-                                                                                                                          query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>,
-                                                                                                                          axios?: AxiosRequestConfig
-                                                                                                                      }
+    
+export const getListPostsQueryOptions = <TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
-    const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getListPostsQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getListPostsQueryKey();
 
+  
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPosts>>> = ({signal}) => listPosts({signal, ...axiosOptions});
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPosts>>> = ({ signal }) => listPosts({ signal, ...axiosOptions });
 
+      
 
-    return {
-        queryKey,
-        queryFn, ...queryOptions
-    } as UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    }
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type ListPostsQueryResult = NonNullable<Awaited<ReturnType<typeof listPosts>>>
@@ -544,93 +502,81 @@ export type ListPostsQueryError = AxiosError<unknown>
 
 
 export function useListPosts<TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>(
-    options: {
-        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>> & Pick<
-            DefinedInitialDataOptions<
-                Awaited<ReturnType<typeof listPosts>>,
-                TError,
-                Awaited<ReturnType<typeof listPosts>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPosts>>,
+          TError,
+          Awaited<ReturnType<typeof listPosts>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListPosts<TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>> & Pick<
-            UndefinedInitialDataOptions<
-                Awaited<ReturnType<typeof listPosts>>,
-                TError,
-                Awaited<ReturnType<typeof listPosts>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPosts>>,
+          TError,
+          Awaited<ReturnType<typeof listPosts>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListPosts<TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useListPosts<TData = Awaited<ReturnType<typeof listPosts>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPosts>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-    const queryOptions = getListPostsQueryOptions(options)
+  const queryOptions = getListPostsQueryOptions(options)
 
-    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    };
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-    query.queryKey = queryOptions.queryKey;
+  query.queryKey = queryOptions.queryKey ;
 
-    return query;
+  return query;
 }
+
+
 
 
 export const feed = (
     params?: FeedParams, options?: AxiosRequestConfig
-): Promise<AxiosResponse<PostsFeedResponse>> => {
-
-
+ ): Promise<AxiosResponse<PostsFeedResponse>> => {
+    
+    
     return axios.default.get(
-        `/api/v1/user/post/feed`, {
-            ...options,
-            params: {...params, ...options?.params},
-        }
+      `https://server.homecooking.vrba.dev/api/v1/user/post/feed`,{
+    ...options,
+        params: {...params, ...options?.params},}
     );
-}
+  }
 
 
 export const getFeedQueryKey = (params?: FeedParams,) => {
-    return [`/api/v1/user/post/feed`, ...(params ? [params] : [])] as const;
-}
+    return [`https://server.homecooking.vrba.dev/api/v1/user/post/feed`, ...(params ? [params]: [])] as const;
+    }
 
-
-export const getFeedQueryOptions = <TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(params?: FeedParams, options?: {
-                                                                                                                query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>,
-                                                                                                                axios?: AxiosRequestConfig
-                                                                                                            }
+    
+export const getFeedQueryOptions = <TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(params?: FeedParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
-    const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getFeedQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getFeedQueryKey(params);
 
+  
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof feed>>> = ({signal}) => feed(params, {signal, ...axiosOptions});
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof feed>>> = ({ signal }) => feed(params, { signal, ...axiosOptions });
 
+      
 
-    return {queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    }
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type FeedQueryResult = NonNullable<Awaited<ReturnType<typeof feed>>>
@@ -638,93 +584,79 @@ export type FeedQueryError = AxiosError<unknown>
 
 
 export function useFeed<TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(
-    params: undefined | FeedParams, options: {
-        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>> & Pick<
-            DefinedInitialDataOptions<
-                Awaited<ReturnType<typeof feed>>,
-                TError,
-                Awaited<ReturnType<typeof feed>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+ params: undefined |  FeedParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof feed>>,
+          TError,
+          Awaited<ReturnType<typeof feed>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useFeed<TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(
-    params?: FeedParams, options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>> & Pick<
-            UndefinedInitialDataOptions<
-                Awaited<ReturnType<typeof feed>>,
-                TError,
-                Awaited<ReturnType<typeof feed>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+ params?: FeedParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof feed>>,
+          TError,
+          Awaited<ReturnType<typeof feed>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useFeed<TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(
-    params?: FeedParams, options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+ params?: FeedParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useFeed<TData = Awaited<ReturnType<typeof feed>>, TError = AxiosError<unknown>>(
-    params?: FeedParams, options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+ params?: FeedParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof feed>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-    const queryOptions = getFeedQueryOptions(params, options)
+  const queryOptions = getFeedQueryOptions(params,options)
 
-    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    };
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-    query.queryKey = queryOptions.queryKey;
+  query.queryKey = queryOptions.queryKey ;
 
-    return query;
+  return query;
 }
+
+
 
 
 export const getUserInfo = (
-    options?: AxiosRequestConfig
-): Promise<AxiosResponse<UserInfoResponse>> => {
-
-
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<UserInfoResponse>> => {
+    
+    
     return axios.default.get(
-        `/api/v1/user/me`, options
+      `https://server.homecooking.vrba.dev/api/v1/user/me`,options
     );
-}
+  }
 
 
 export const getGetUserInfoQueryKey = () => {
-    return [`/api/v1/user/me`] as const;
-}
+    return [`https://server.homecooking.vrba.dev/api/v1/user/me`] as const;
+    }
 
-
-export const getGetUserInfoQueryOptions = <TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>(options?: {
-                                                                                                                              query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>,
-                                                                                                                              axios?: AxiosRequestConfig
-                                                                                                                          }
+    
+export const getGetUserInfoQueryOptions = <TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
-    const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getGetUserInfoQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetUserInfoQueryKey();
 
+  
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfo>>> = ({signal}) => getUserInfo({signal, ...axiosOptions});
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfo>>> = ({ signal }) => getUserInfo({ signal, ...axiosOptions });
 
+      
 
-    return {
-        queryKey,
-        queryFn, ...queryOptions
-    } as UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    }
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type GetUserInfoQueryResult = NonNullable<Awaited<ReturnType<typeof getUserInfo>>>
@@ -732,52 +664,40 @@ export type GetUserInfoQueryError = AxiosError<unknown>
 
 
 export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>(
-    options: {
-        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
-            DefinedInitialDataOptions<
-                Awaited<ReturnType<typeof getUserInfo>>,
-                TError,
-                Awaited<ReturnType<typeof getUserInfo>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserInfo>>,
+          TError,
+          Awaited<ReturnType<typeof getUserInfo>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
-            UndefinedInitialDataOptions<
-                Awaited<ReturnType<typeof getUserInfo>>,
-                TError,
-                Awaited<ReturnType<typeof getUserInfo>>
-            >, 'initialData'
-        >, axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserInfo>>,
+          TError,
+          Awaited<ReturnType<typeof getUserInfo>>
+        > , 'initialData'
+      >, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = AxiosError<unknown>>(
-    options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>,
-        axios?: AxiosRequestConfig
-    }
-    , queryClient?: QueryClient
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-    const queryOptions = getGetUserInfoQueryOptions(options)
+  const queryOptions = getGetUserInfoQueryOptions(options)
 
-    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-        queryKey: DataTag<QueryKey, TData, TError>
-    };
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-    query.queryKey = queryOptions.queryKey;
+  query.queryKey = queryOptions.queryKey ;
 
-    return query;
+  return query;
 }

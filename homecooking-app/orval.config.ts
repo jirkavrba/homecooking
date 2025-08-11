@@ -4,7 +4,8 @@ export default {
         output: {
             mode: 'single',
             target: './src/generated/api.ts',
-            client: 'react-query'
+            client: 'react-query',
+            baseUrl: 'https://server.homecooking.vrba.dev'
         },
     },
 };
