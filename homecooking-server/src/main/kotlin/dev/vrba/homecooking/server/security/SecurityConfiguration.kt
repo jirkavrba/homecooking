@@ -4,6 +4,7 @@ import dev.vrba.homecooking.server.configuration.BotUserConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -36,9 +37,12 @@ class SecurityConfiguration(
             .httpBasic { it.realmName("Homecooking") }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/v1/bot/**").hasAuthority(BOT_ROLE)
-                it.requestMatchers("/api/v1/user/**").hasAuthority(USER_ROLE)
-                it.requestMatchers("/api/v1/auth/**").permitAll()
+                it.requestMatchers(HttpMethod.GET, "/api/v1/bot/**").hasAuthority(BOT_ROLE)
+                it.requestMatchers(HttpMethod.POST, "/api/v1/bot/**").hasAuthority(BOT_ROLE)
+                it.requestMatchers(HttpMethod.GET, "/api/v1/user/**").hasAuthority(USER_ROLE)
+                it.requestMatchers(HttpMethod.POST, "/api/v1/user/**").hasAuthority(USER_ROLE)
+                it.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                it.requestMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
                 it.anyRequest().permitAll()
             }
             .addFilterBefore(filter, UsernamePasswordAuthenticationFilter::class.java)

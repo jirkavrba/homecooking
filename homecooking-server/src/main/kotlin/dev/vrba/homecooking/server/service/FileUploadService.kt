@@ -1,4 +1,4 @@
-package dev.vrba.homecooking.server.security
+package dev.vrba.homecooking.server.service
 
 import dev.vrba.homecooking.server.exception.UnsupportedFileException
 import dev.vrba.homecooking.server.model.UploadedFile

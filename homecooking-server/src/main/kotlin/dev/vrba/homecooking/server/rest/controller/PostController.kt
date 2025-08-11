@@ -7,7 +7,7 @@ import dev.vrba.homecooking.server.rest.response.FileUploadResponse
 import dev.vrba.homecooking.server.rest.response.PostsFeedResponse
 import dev.vrba.homecooking.server.rest.response.PostsListingResponse
 import dev.vrba.homecooking.server.rest.response.dto.toDto
-import dev.vrba.homecooking.server.security.FileUploadService
+import dev.vrba.homecooking.server.service.FileUploadService
 import dev.vrba.homecooking.server.service.MealPostService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.MediaType
