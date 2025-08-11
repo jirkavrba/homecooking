@@ -44,8 +44,6 @@ class MagicLinkService(
             throw MagicLinkExpiredException()
         }
 
-        repository.delete(link)
-
         return link
     }
 }
