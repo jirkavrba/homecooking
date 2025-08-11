@@ -29,6 +29,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Build and push the docker image'
+        working-directory: homecooking-server
         run: ./gradlew bootBuildImage \
           --imageName=ghcr.io/jirkavrba/homecooking/server:latest \
           --publishImage
