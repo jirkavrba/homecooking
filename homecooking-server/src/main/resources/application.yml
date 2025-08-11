@@ -30,8 +30,8 @@ homecooking:
       password: ${BOT_PASSWORD:secret}
 
   magic-links:
-    base-url: https://homecooking.vrba.dev/login/magic-link/
-    expiration-hours: 8
+    base-url: ${MAGIC_LINKS_BASE_URL:https://homecooking.vrba.dev/login/magic-link/}
+    expiration-hours: ${MAGIC_LINK_EXPIRATION_HOURS:8}
 
   integration:
     image-kit:
