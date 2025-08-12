@@ -1,20 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {createFileRoute, Link} from "@tanstack/react-router";
+import {Button, Dialog} from "@chakra-ui/react";
 
 export const Route = createFileRoute("/login/magic-link/error")({
-	component: RouteComponent,
+    component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="flex flex-col items-center">
-			<h1>Tenhle odkaz nefunguje.</h1>
-			<p>Pravděpodobně vypršela jeho platnost.</p>
-
-			<Link to={"/login"}>
-				<button className="bg-black text-white p-4 cursor-pointer">
-					Zpět na přihlášení
-				</button>
-			</Link>
-		</div>
-	);
+    return (
+        <>
+            <Dialog.Header>
+                <Dialog.Title>Tenhle odkaz nefunguje</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>
+                Pravděpodobně vypršela jeho platnost. Ale to nevadí, můžeš si vygenerovat nový.
+            </Dialog.Body>
+            <Dialog.Footer>
+                <Link to="/login">
+                    <Button>Zpět na přihlášení</Button>
+                </Link>
+            </Dialog.Footer>
+        </>
+    );
 }
