@@ -9,15 +9,45 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as LoginMagicLinkRouteImport } from './routes/login/magic-link'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
-import { Route as LoginMagicLinkErrorRouteImport } from './routes/login.magic-link.error'
-import { Route as LoginMagicLinkTokenRouteImport } from './routes/login.magic-link.$token'
+import { Route as LoginMagicLinkErrorRouteImport } from './routes/login/magic-link/error'
+import { Route as LoginMagicLinkTokenRouteImport } from './routes/login/magic-link/$token'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const LoginMagicLinkRoute = LoginMagicLinkRouteImport.update({
+  id: '/magic-link',
+  path: '/magic-link',
+  getParentRoute: () => LoginRoute,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
@@ -25,32 +55,45 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginMagicLinkErrorRoute = LoginMagicLinkErrorRouteImport.update({
-  id: '/login/magic-link/error',
-  path: '/login/magic-link/error',
-  getParentRoute: () => rootRouteImport,
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => LoginMagicLinkRoute,
 } as any)
 const LoginMagicLinkTokenRoute = LoginMagicLinkTokenRouteImport.update({
-  id: '/login/magic-link/$token',
-  path: '/login/magic-link/$token',
-  getParentRoute: () => rootRouteImport,
+  id: '/$token',
+  path: '/$token',
+  getParentRoute: () => LoginMagicLinkRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
+  '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
   '/login/magic-link/error': typeof LoginMagicLinkErrorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
+  '/app': typeof AppIndexRoute
+  '/login': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
   '/login/magic-link/error': typeof LoginMagicLinkErrorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/login': typeof LoginRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
+  '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
   '/login/magic-link/error': typeof LoginMagicLinkErrorRoute
 }
@@ -58,38 +101,86 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
+    | '/login'
     | '/demo/tanstack-query'
+    | '/login/magic-link'
+    | '/app/'
+    | '/login/'
     | '/login/magic-link/$token'
     | '/login/magic-link/error'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/demo/tanstack-query'
+    | '/login/magic-link'
+    | '/app'
+    | '/login'
     | '/login/magic-link/$token'
     | '/login/magic-link/error'
   id:
     | '__root__'
     | '/'
+    | '/app'
+    | '/login'
     | '/demo/tanstack-query'
+    | '/login/magic-link'
+    | '/app/'
+    | '/login/'
     | '/login/magic-link/$token'
     | '/login/magic-link/error'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  LoginMagicLinkTokenRoute: typeof LoginMagicLinkTokenRoute
-  LoginMagicLinkErrorRoute: typeof LoginMagicLinkErrorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/login/magic-link': {
+      id: '/login/magic-link'
+      path: '/magic-link'
+      fullPath: '/login/magic-link'
+      preLoaderRoute: typeof LoginMagicLinkRouteImport
+      parentRoute: typeof LoginRoute
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -100,26 +191,62 @@ declare module '@tanstack/react-router' {
     }
     '/login/magic-link/error': {
       id: '/login/magic-link/error'
-      path: '/login/magic-link/error'
+      path: '/error'
       fullPath: '/login/magic-link/error'
       preLoaderRoute: typeof LoginMagicLinkErrorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LoginMagicLinkRoute
     }
     '/login/magic-link/$token': {
       id: '/login/magic-link/$token'
-      path: '/login/magic-link/$token'
+      path: '/$token'
       fullPath: '/login/magic-link/$token'
       preLoaderRoute: typeof LoginMagicLinkTokenRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LoginMagicLinkRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface LoginMagicLinkRouteChildren {
+  LoginMagicLinkTokenRoute: typeof LoginMagicLinkTokenRoute
+  LoginMagicLinkErrorRoute: typeof LoginMagicLinkErrorRoute
+}
+
+const LoginMagicLinkRouteChildren: LoginMagicLinkRouteChildren = {
   LoginMagicLinkTokenRoute: LoginMagicLinkTokenRoute,
   LoginMagicLinkErrorRoute: LoginMagicLinkErrorRoute,
+}
+
+const LoginMagicLinkRouteWithChildren = LoginMagicLinkRoute._addFileChildren(
+  LoginMagicLinkRouteChildren,
+)
+
+interface LoginRouteChildren {
+  LoginMagicLinkRoute: typeof LoginMagicLinkRouteWithChildren
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginMagicLinkRoute: LoginMagicLinkRouteWithChildren,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRouteWithChildren,
+  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
