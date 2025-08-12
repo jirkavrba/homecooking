@@ -24,8 +24,6 @@ client.on(Events.InteractionCreate, async (event) => {
 
         const link = await createMagicLink(event.user.id, username, avatar)
 
-        console.log(link);
-
         const button = new ButtonBuilder()
             .setStyle(ButtonStyle.Link)
             .setLabel("Odkaz pro přihlášení")
