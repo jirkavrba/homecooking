@@ -17,7 +17,7 @@ client.once(Events.ClientReady, (bot) => {
     console.log(`Ready! Logged in as ${bot.user.tag}`);
 });
 
-client.once(Events.InteractionCreate, async (event) => {
+client.on(Events.InteractionCreate, async (event) => {
     if (event.isMessageComponent() && event.customId === "login") {
         const username = event.user.displayName || event.user.username;
         const avatar = event.user.displayAvatarURL({extension: "png"});
@@ -44,7 +44,7 @@ client.once(Events.InteractionCreate, async (event) => {
             flags: [MessageFlagsBitField.Flags.Ephemeral],
             embeds: [embed],
             components: [row]
-        })
+        });
     }
 });
 
