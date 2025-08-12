@@ -23,20 +23,20 @@ function RouteComponent() {
 	const redirectToAppPage = AppRoute.useNavigate();
 	const redirectToErrorPage = NotFoundRoute.useNavigate();
 
-	useEffect(() => {
-		login(
-			{ data: { token } },
-			{
-				onError: () =>
-					void redirectToErrorPage({ to: "/login/magic-link/error" }),
-				onSuccess: ({ data }) => {
-					localStorage.setItem("authToken", data.auth_token);
-					redirectToAppPage({ to: "/app" });
-					router.invalidate();
-				},
-			},
-		);
-	}, [token, login]);
+	// useEffect(() => {
+	// 	login(
+	// 		{ data: { token } },
+	// 		{
+	// 			onError: () =>
+	// 				void redirectToErrorPage({ to: "/login/magic-link/error" }),
+	// 			onSuccess: ({ data }) => {
+	// 				localStorage.setItem("authToken", data.auth_token);
+	// 				redirectToAppPage({ to: "/app" });
+	// 				router.invalidate();
+	// 			},
+	// 		},
+	// 	);
+	// }, [token, login]);
 
 	return <div>Logging you in with {token}</div>;
 }

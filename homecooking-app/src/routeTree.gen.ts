@@ -15,7 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as LoginMagicLinkRouteImport } from './routes/login/magic-link'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
+import { Route as AppPostRouteImport } from './routes/app/post'
 import { Route as LoginMagicLinkErrorRouteImport } from './routes/login/magic-link/error'
 import { Route as LoginMagicLinkTokenRouteImport } from './routes/login/magic-link/$token'
 
@@ -49,10 +49,10 @@ const LoginMagicLinkRoute = LoginMagicLinkRouteImport.update({
   path: '/magic-link',
   getParentRoute: () => LoginRoute,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
+const AppPostRoute = AppPostRouteImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => AppRoute,
 } as any)
 const LoginMagicLinkErrorRoute = LoginMagicLinkErrorRouteImport.update({
   id: '/error',
@@ -69,7 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/app/post': typeof AppPostRoute
   '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -78,7 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/app/post': typeof AppPostRoute
   '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app': typeof AppIndexRoute
   '/login': typeof LoginIndexRoute
@@ -90,7 +90,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/app/post': typeof AppPostRoute
   '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -103,7 +103,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
-    | '/demo/tanstack-query'
+    | '/app/post'
     | '/login/magic-link'
     | '/app/'
     | '/login/'
@@ -112,7 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/demo/tanstack-query'
+    | '/app/post'
     | '/login/magic-link'
     | '/app'
     | '/login'
@@ -123,7 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
-    | '/demo/tanstack-query'
+    | '/app/post'
     | '/login/magic-link'
     | '/app/'
     | '/login/'
@@ -135,7 +135,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   LoginRoute: typeof LoginRouteWithChildren
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -182,12 +181,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginMagicLinkRouteImport
       parentRoute: typeof LoginRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
+    '/app/post': {
+      id: '/app/post'
+      path: '/post'
+      fullPath: '/app/post'
+      preLoaderRoute: typeof AppPostRouteImport
+      parentRoute: typeof AppRoute
     }
     '/login/magic-link/error': {
       id: '/login/magic-link/error'
@@ -207,10 +206,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppPostRoute: typeof AppPostRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppPostRoute: AppPostRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
@@ -246,7 +247,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   LoginRoute: LoginRouteWithChildren,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -7,8 +7,8 @@ import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provi
 // Import the generated route tree
 import {routeTree} from "./routeTree.gen";
 
-import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
+import {Provider} from "@/components/ui/Provider.tsx";
 
 // Create a new router instance
 const TanStackQueryProviderContext = TanStackQueryProvider.getContext();
@@ -40,9 +40,11 @@ if (rootElement && !rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
         <StrictMode>
-            <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
-                <RouterProvider router={router}/>
-            </TanStackQueryProvider.Provider>
+            <Provider>
+                <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
+                    <RouterProvider router={router}/>
+                </TanStackQueryProvider.Provider>
+            </Provider>
         </StrictMode>,
     );
 }

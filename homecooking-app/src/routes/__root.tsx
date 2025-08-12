@@ -19,8 +19,8 @@ export const Route = createRootRouteWithContext<AppRouterContext>()({
 		<AuthenticationProvider>
 			<Header />
 			<Outlet />
-			<TanStackRouterDevtools />
-			<TanStackQueryLayout />
+			{/*<TanStackRouterDevtools />*/}
+			{/*<TanStackQueryLayout />*/}
 		</AuthenticationProvider>
 	),
 });
