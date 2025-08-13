@@ -1,18 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import type { PostFormData } from "./PostCreationForm";
 import {
-  Avatar,
   Button,
   CloseButton,
   Field,
   Input,
   InputGroup,
-  Timeline,
   VStack,
 } from "@chakra-ui/react";
-import { LuChefHat, LuHam } from "react-icons/lu";
+import { LuChefHat } from "react-icons/lu";
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
 
 export const RecipeInput = () => {
   const { setValue } = useFormContext<PostFormData>();

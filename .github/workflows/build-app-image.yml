@@ -1,10 +1,10 @@
-name: build-bot-image
+name: build-app-image
 
 on:
   push:
     paths:
-      - ".github/workflows/build-bot-image.yml"
-      - "homecooking-bot/**"
+      - ".github/workflows/build-app-image.yml"
+      - "homecooking-app/**"
     branches:
       - "main"
 
@@ -34,4 +34,4 @@ jobs:
         with:
           push: true
           context: homecooking-bot/
-          tags: ghcr.io/jirkavrba/homecooking/bot:latest
+          tags: ghcr.io/jirkavrba/homecooking/app:latest

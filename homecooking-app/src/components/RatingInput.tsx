@@ -2,13 +2,11 @@ import type { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import type { PostFormData } from "./PostCreationForm";
 import {
-  Box,
   Button,
   Field,
   HStack,
   IconButton,
   RatingGroup,
-  VStack,
 } from "@chakra-ui/react";
 import { LuStar, LuTrash } from "react-icons/lu";
 
