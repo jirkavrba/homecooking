@@ -1,16 +1,14 @@
-import type {FC, ReactNode} from "react";
-import {useAxiosAuthInterceptor} from "@/hooks/useAxiosAuthInterceptor.ts";
+import type { FC, ReactNode } from "react";
+import { useAxiosAuthInterceptor } from "@/hooks/useAxiosAuthInterceptor.ts";
 
 export type AuthenticationProviderProps = {
-    children?: ReactNode;
+	children?: ReactNode;
 };
 
-export const AuthenticationProvider: FC<AuthenticationProviderProps> = ({children}) => {
-    useAxiosAuthInterceptor();
+export const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
+	children,
+}) => {
+	useAxiosAuthInterceptor();
 
-    return (
-        <>
-            {children}
-        </>
-    )
+	return <>{children}</>;
 };
