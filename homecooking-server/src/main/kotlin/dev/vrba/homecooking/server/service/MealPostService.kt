@@ -40,10 +40,10 @@ class MealPostService(
         return repository.save(entity)
     }
 
-    fun getUserFeedPosts(user: User): List<MealPostWithAuthor> {
+    fun getUserFeedPosts(user: User, page: Int): List<MealPostWithAuthor> {
         val userIds = user.followedUsers.map { it.id } + user.id
         val userReferences = userIds.map { AggregateReference.to<User, Int>(it) }.toSet()
-        val page = PageRequest.of(1, 10, Sort.Direction.DESC, "posted_at")
+        val page = PageRequest.of(page.coerceAtLeast(0), 10, Sort.Direction.DESC, "posted_at")
         val posts = repository.findAllByUserIn(userReferences, page)
         val authors = userService.findAllByIds(userIds)
 

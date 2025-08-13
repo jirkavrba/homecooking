@@ -37,7 +37,7 @@ class PostController(
     ): ResponseEntity<PostsFeedResponse> {
         println(page)
 
-        val posts = mealPostService.getUserFeedPosts(user)
+        val posts = mealPostService.getUserFeedPosts(user, page)
         val response = PostsFeedResponse(posts = posts.map { it.toDto() })
 
         return ResponseEntity.ok(response)
