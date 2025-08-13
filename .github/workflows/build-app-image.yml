@@ -33,5 +33,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: homecooking-bot/
+          context: homecooking-app/
           tags: ghcr.io/jirkavrba/homecooking/app:latest
