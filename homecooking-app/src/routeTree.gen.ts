@@ -14,7 +14,6 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
-import { Route as LoginMagicLinkRouteImport } from './routes/login/magic-link'
 import { Route as AppPostRouteImport } from './routes/app/post'
 import { Route as LoginMagicLinkErrorRouteImport } from './routes/login/magic-link/error'
 import { Route as LoginMagicLinkTokenRouteImport } from './routes/login/magic-link/$token'
@@ -44,25 +43,20 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const LoginMagicLinkRoute = LoginMagicLinkRouteImport.update({
-  id: '/magic-link',
-  path: '/magic-link',
-  getParentRoute: () => LoginRoute,
-} as any)
 const AppPostRoute = AppPostRouteImport.update({
   id: '/post',
   path: '/post',
   getParentRoute: () => AppRoute,
 } as any)
 const LoginMagicLinkErrorRoute = LoginMagicLinkErrorRouteImport.update({
-  id: '/error',
-  path: '/error',
-  getParentRoute: () => LoginMagicLinkRoute,
+  id: '/magic-link/error',
+  path: '/magic-link/error',
+  getParentRoute: () => LoginRoute,
 } as any)
 const LoginMagicLinkTokenRoute = LoginMagicLinkTokenRouteImport.update({
-  id: '/$token',
-  path: '/$token',
-  getParentRoute: () => LoginMagicLinkRoute,
+  id: '/magic-link/$token',
+  path: '/magic-link/$token',
+  getParentRoute: () => LoginRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -70,7 +64,6 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
   '/app/post': typeof AppPostRoute
-  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
@@ -79,7 +72,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/post': typeof AppPostRoute
-  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app': typeof AppIndexRoute
   '/login': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
@@ -91,7 +83,6 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
   '/app/post': typeof AppPostRoute
-  '/login/magic-link': typeof LoginMagicLinkRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
   '/login/magic-link/$token': typeof LoginMagicLinkTokenRoute
@@ -104,7 +95,6 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/post'
-    | '/login/magic-link'
     | '/app/'
     | '/login/'
     | '/login/magic-link/$token'
@@ -113,7 +103,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/app/post'
-    | '/login/magic-link'
     | '/app'
     | '/login'
     | '/login/magic-link/$token'
@@ -124,7 +113,6 @@ export interface FileRouteTypes {
     | '/app'
     | '/login'
     | '/app/post'
-    | '/login/magic-link'
     | '/app/'
     | '/login/'
     | '/login/magic-link/$token'
@@ -174,13 +162,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/login/magic-link': {
-      id: '/login/magic-link'
-      path: '/magic-link'
-      fullPath: '/login/magic-link'
-      preLoaderRoute: typeof LoginMagicLinkRouteImport
-      parentRoute: typeof LoginRoute
-    }
     '/app/post': {
       id: '/app/post'
       path: '/post'
@@ -190,17 +171,17 @@ declare module '@tanstack/react-router' {
     }
     '/login/magic-link/error': {
       id: '/login/magic-link/error'
-      path: '/error'
+      path: '/magic-link/error'
       fullPath: '/login/magic-link/error'
       preLoaderRoute: typeof LoginMagicLinkErrorRouteImport
-      parentRoute: typeof LoginMagicLinkRoute
+      parentRoute: typeof LoginRoute
     }
     '/login/magic-link/$token': {
       id: '/login/magic-link/$token'
-      path: '/$token'
+      path: '/magic-link/$token'
       fullPath: '/login/magic-link/$token'
       preLoaderRoute: typeof LoginMagicLinkTokenRouteImport
-      parentRoute: typeof LoginMagicLinkRoute
+      parentRoute: typeof LoginRoute
     }
   }
 }
@@ -217,28 +198,16 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
-interface LoginMagicLinkRouteChildren {
+interface LoginRouteChildren {
+  LoginIndexRoute: typeof LoginIndexRoute
   LoginMagicLinkTokenRoute: typeof LoginMagicLinkTokenRoute
   LoginMagicLinkErrorRoute: typeof LoginMagicLinkErrorRoute
 }
 
-const LoginMagicLinkRouteChildren: LoginMagicLinkRouteChildren = {
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginIndexRoute: LoginIndexRoute,
   LoginMagicLinkTokenRoute: LoginMagicLinkTokenRoute,
   LoginMagicLinkErrorRoute: LoginMagicLinkErrorRoute,
-}
-
-const LoginMagicLinkRouteWithChildren = LoginMagicLinkRoute._addFileChildren(
-  LoginMagicLinkRouteChildren,
-)
-
-interface LoginRouteChildren {
-  LoginMagicLinkRoute: typeof LoginMagicLinkRouteWithChildren
-  LoginIndexRoute: typeof LoginIndexRoute
-}
-
-const LoginRouteChildren: LoginRouteChildren = {
-  LoginMagicLinkRoute: LoginMagicLinkRouteWithChildren,
-  LoginIndexRoute: LoginIndexRoute,
 }
 
 const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)

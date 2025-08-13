@@ -1,9 +1,9 @@
-FROM oven/bun:1.2.20-alpine
+FROM denoland/deno:2.4.3
 
 COPY package.json ./
-COPY bun.lock ./
+COPY deno.lock ./
 COPY src ./
 
-RUN bun install
+RUN deno install
 
-ENTRYPOINT ["bun", "run", "index.ts"]
+ENTRYPOINT ["deno", "run", "--allow-env", "--allow-net",  "index.ts"]
