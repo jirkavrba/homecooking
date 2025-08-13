@@ -1,5 +1,5 @@
 import type {FC, ReactNode} from "react";
-import {useAxiosAuthInterceptor} from "@/hooks/useAxiosAuthInterceptor.tsx";
+import {useAxiosAuthInterceptor} from "@/hooks/useAxiosAuthInterceptor.ts";
 
 export type AuthenticationProviderProps = {
     children?: ReactNode;

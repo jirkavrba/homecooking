@@ -1,5 +1,5 @@
 import {createFileRoute, redirect} from "@tanstack/react-router";
-import {useAxiosAuthInterceptor} from "@/hooks/useAxiosAuthInterceptor.tsx";
+import {useAxiosAuthInterceptor} from "@/hooks/useAxiosAuthInterceptor.ts";
 
 export const Route = createFileRoute("/")({
     component: App,

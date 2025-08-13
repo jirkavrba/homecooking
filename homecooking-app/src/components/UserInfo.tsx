@@ -1,5 +1,6 @@
 import {useRouteContext} from "@tanstack/react-router";
 import {useGetUserInfo} from "@/generated/api.ts";
+import {Avatar, HStack, Skeleton, Spinner, Text} from "@chakra-ui/react";
 
 export const UserInfo = () => {
     const {authenticated} = useRouteContext({from: "/app"});
@@ -10,13 +11,23 @@ export const UserInfo = () => {
     }
 
     if (isLoading || !user) {
-        return <div>Loading...</div>;
+        return (
+            <HStack gap={4}>
+                <Avatar.Root>
+                    <Spinner/>
+                </Avatar.Root>
+                <Skeleton height="5" width="40"/>
+            </HStack>
+        );
     }
 
     return (
-        <div>
-            <img src={user.data.avatar_url} alt={user.data.username}/>
-            <div>{user.data.username}</div>
-        </div>
-    )
+        <HStack gap={4}>
+            <Avatar.Root>
+                <Avatar.Fallback name={user.data.username}/>
+                <Avatar.Image src={user.data.avatar_url}/>
+            </Avatar.Root>
+            <Text fontWeight="medium">@{user.data.username}</Text>
+        </HStack>
+    );
 };

@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import axios from "axios";
-import {useAuthentication} from "@/hooks/useAuthentication.tsx";
+import {useAuthentication} from "@/hooks/useAuthentication.ts";
 import { useRouter } from "@tanstack/react-router";
 
 export const useAxiosAuthInterceptor = () => {

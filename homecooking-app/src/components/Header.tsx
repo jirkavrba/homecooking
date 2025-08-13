@@ -1,13 +1,14 @@
 import {Link} from "@tanstack/react-router";
+import {Stack, Text} from "@chakra-ui/react";
 
 export default function Header() {
     return (
-        <header className="p-2 flex gap-2 bg-white text-black justify-between">
-            <nav className="flex flex-row">
-                <div className="px-2 font-bold">
-                    <Link to="/">Homecooking</Link>
-                </div>
-            </nav>
-        </header>
+        <Stack paddingX={10} paddingY={4} >
+            <Link to="/">
+                <Text textStyle="lg" fontWeight="black">
+                    Homecooking
+                </Text>
+            </Link>
+        </Stack>
     );
 }

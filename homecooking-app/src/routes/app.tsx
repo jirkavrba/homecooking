@@ -1,5 +1,6 @@
 import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
 import {UserInfo} from "@/components/UserInfo.tsx";
+import {VStack} from "@chakra-ui/react";
 
 export const Route = createFileRoute("/app")({
     component: RouteComponent,
@@ -12,9 +13,9 @@ export const Route = createFileRoute("/app")({
 
 function RouteComponent() {
     return (
-        <div>
+        <VStack gap={8} paddingX={10} align="stretch">
             <UserInfo/>
             <Outlet/>
-        </div>
+        </VStack>
     );
 }
