@@ -7,14 +7,14 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import { PostImageInput } from "@/components/PostImageInput.tsx";
+import { PostImageInput } from "@/components/PostCreationForm/PostImageInput.tsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { IngredientsListInput } from "./IngredientsListInput";
-import { RecipeInput } from "./RecipeInput";
-import { RatingInput } from "./RatingInput";
-import { useCreatePost, type CreatePostRequest } from "@/generated/api";
-import { Route as FeedRoute } from "@/routes/app/index";
+import { IngredientsListInput } from "./IngredientsListInput.tsx";
+import { RecipeInput } from "./RecipeInput.tsx";
+import { RatingInput } from "./RatingInput.tsx";
+import { useCreatePost, type CreatePostRequest } from "@/generated/api.ts";
+import { Route as FeedRoute } from "@/routes/app";
 import { Link } from "@tanstack/react-router";
 
 export type PostFormData = {

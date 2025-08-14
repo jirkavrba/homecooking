@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import type { PostFormData } from "./PostCreationForm";
+import type { PostFormData } from "./PostCreationForm.tsx";
 import {
   Button,
   Field,

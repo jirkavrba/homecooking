@@ -8,10 +8,10 @@ import {
 	Text,
 	Button,
 } from "@chakra-ui/react";
-import { useUploadImage } from "@/generated/api";
+import { useUploadImage } from "@/generated/api.ts";
 import type { FileAcceptDetails } from "node_modules/@chakra-ui/react/dist/types/components/file-upload/namespace";
 import { useFormContext } from "react-hook-form";
-import type { PostFormData } from "./PostCreationForm";
+import type { PostFormData } from "./PostCreationForm.tsx";
 
 type ImagePreviewProps = {
 	imageUrl: string;

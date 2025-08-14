@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import type { PostFormData } from "./PostCreationForm";
+import type { PostFormData } from "./PostCreationForm.tsx";
 import {
   Button,
   CloseButton,
@@ -37,10 +37,7 @@ export const RecipeInput = () => {
       return;
     }
 
-    const serialized = filteredSteps
-      .filter((value) => value.trim())
-      .map((value) => `- ${value}`)
-      .join("\n");
+    const serialized = filteredSteps.filter((value) => value.trim()).join("\n");
 
     setValue("recipe", serialized);
   }, [recipeSteps, setValue]);

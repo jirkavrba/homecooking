@@ -1,4 +1,4 @@
-import { PostCreationForm } from "@/components/PostCreationForm.tsx";
+import { PostCreationForm } from "@/components/PostCreationForm/PostCreationForm.tsx";
 import { createFileRoute } from "@tanstack/react-router";
 import { Stack, Text } from "@chakra-ui/react";
 
